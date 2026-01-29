@@ -66,7 +66,6 @@ export type ContentGeneratorConfig = {
   // OpenAI-compatible API configuration
   openaiEndpoint?: string;
   openaiModel?: string;
-  openaiTimeoutMs?: number;
 };
 
 export async function createContentGeneratorConfig(
@@ -88,9 +87,6 @@ export async function createContentGeneratorConfig(
     process.env['OPENAI_API_ENDPOINT'] ||
     'http://localhost:11434/v1/chat/completions';
   const openaiModel = process.env['OPENAI_MODEL'] || 'gpt-oss:120b';
-  const openaiTimeoutMs = process.env['OPENAI_TIMEOUT_SECONDS']
-    ? parseInt(process.env['OPENAI_TIMEOUT_SECONDS'], 300) * 1000
-    : undefined;
 
   const contentGeneratorConfig: ContentGeneratorConfig = {
     authType,
@@ -127,7 +123,6 @@ export async function createContentGeneratorConfig(
     contentGeneratorConfig.apiKey = openaiApiKey;
     contentGeneratorConfig.openaiEndpoint = openaiEndpoint;
     contentGeneratorConfig.openaiModel = openaiModel;
-    contentGeneratorConfig.openaiTimeoutMs = openaiTimeoutMs;
 
     return contentGeneratorConfig;
   }
@@ -217,7 +212,6 @@ export async function createContentGenerator(
         endpoint: config.openaiEndpoint || 'https://api.openai.com/v1/chat/completions',
         model: config.openaiModel || 'gpt-4',
         apiKey: config.apiKey,
-        timeout: config.openaiTimeoutMs,
       });
       // Log OpenAI configuration details as requested
       const maskedKey = config.apiKey ? `${config.apiKey.slice(0, 8)}...` : 'undefined';

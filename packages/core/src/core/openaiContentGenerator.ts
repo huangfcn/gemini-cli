@@ -26,7 +26,6 @@ interface OpenAIConfig {
   endpoint: string;
   model: string;
   apiKey?: string;
-  timeout?: number;
 }
 
 /**
@@ -37,13 +36,11 @@ export class OpenAICompatibleContentGenerator implements ContentGenerator {
   private readonly endpoint: string;
   private readonly model: string;
   private readonly apiKey?: string;
-  private readonly timeout?: number;
 
   constructor(config: OpenAIConfig) {
     this.endpoint = config.endpoint;
     this.model = config.model;
     this.apiKey = config.apiKey;
-    this.timeout = config.timeout;
   }
 
   /**
@@ -185,55 +182,17 @@ Full Message Count: ${messages.length}
       // ignore logging errors
     }
 
-    // Use fetchWithTimeout if timeout is configured, otherwise use standard fetch
-    let response: Response;
-    if (this.timeout) {
-      const { fetchWithTimeout } = await import('../utils/fetch.js');
-      response = await fetchWithTimeout(this.endpoint, this.timeout);
-      // Re-create the request logic because fetchWithTimeout only takes url and timeout currently in our simple implementation
-      // Wait, fetchWithTimeout implementation in utils/fetch.ts takes url and timeout. 
-      // It DOES NOT take options. This is a limitation of the current utility.
-      // I should update the utility or implement the timeout here directly.
-      // Implementing directly here to avoid changing widely used utility for now.
-
-      const controller = new AbortController();
-      const signal = request.config?.abortSignal;
-
-      // If parent signal aborts, we should abort too
-      if (signal) {
-        signal.addEventListener('abort', () => controller.abort());
-      }
-
-      const timeoutId = setTimeout(() => controller.abort(), this.timeout);
-
-      try {
-        response = await fetch(this.endpoint, {
-          method: 'POST',
-          headers: this.createHeaders(),
-          body: JSON.stringify({
-            model: this.model,
-            messages,
-            temperature: request.config?.temperature,
-            max_tokens: request.config?.maxOutputTokens,
-          }),
-          signal: controller.signal,
-        });
-      } finally {
-        clearTimeout(timeoutId);
-      }
-    } else {
-      response = await fetch(this.endpoint, {
-        method: 'POST',
-        headers: this.createHeaders(),
-        body: JSON.stringify({
-          model: this.model,
-          messages,
-          temperature: request.config?.temperature,
-          max_tokens: request.config?.maxOutputTokens,
-        }),
-        signal: request.config?.abortSignal,
-      });
-    }
+    const response = await fetch(this.endpoint, {
+      method: 'POST',
+      headers: this.createHeaders(),
+      body: JSON.stringify({
+        model: this.model,
+        messages,
+        temperature: request.config?.temperature,
+        max_tokens: request.config?.maxOutputTokens,
+      }),
+      signal: request.config?.abortSignal,
+    });
 
     if (!response.ok) {
       const errorText = await response.text();

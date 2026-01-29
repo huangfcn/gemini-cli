@@ -209,6 +209,23 @@ export GOOGLE_GENAI_USE_VERTEXAI=true
 gemini
 ```
 
+### Option 4: OpenAI Compatible
+
+**✨ Best for:** Developers using Ollama, LocalAI, or other OpenAI-compatible providers
+
+**Benefits:**
+- **Flexibility**: Use local models or alternative cloud providers
+- **Compatibility**: Standard OpenAI API format
+- **Control**: Full control over endpoint and model
+
+```bash
+# Set your OpenAI-compatible environment variables
+export OPENAI_API_KEY="YOUR_API_KEY"
+export OPENAI_API_ENDPOINT="http://localhost:11434/v1/chat/completions"
+export OPENAI_MODEL="qwen3-coder:30b"
+gemini
+```
+
 For Google Workspace accounts and other authentication methods, see the
 [authentication guide](./docs/get-started/authentication.md).
 
