@@ -1,4 +1,4 @@
-# Gemini CLI
+# Gemini CLI (With OpenAI Compatible Support)
 
 [![Gemini CLI CI](https://github.com/google-gemini/gemini-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/google-gemini/gemini-cli/actions/workflows/ci.yml)
 [![Gemini CLI E2E (Chained)](https://github.com/google-gemini/gemini-cli/actions/workflows/chained_e2e.yml/badge.svg)](https://github.com/google-gemini/gemini-cli/actions/workflows/chained_e2e.yml)
@@ -11,6 +11,10 @@
 Gemini CLI is an open-source AI agent that brings the power of Gemini directly
 into your terminal. It provides lightweight access to Gemini, giving you the
 most direct path from your prompt to our model.
+
+**New in this version:** comprehensive support for **OpenAI compatible APIs**,
+allowing you to seamlessly use OpenAI models, or local models (via Ollama, LM
+Studio, etc.) or other providers alongside Gemini.
 
 Learn all about Gemini CLI in our [documentation](https://geminicli.com/docs/).
 
