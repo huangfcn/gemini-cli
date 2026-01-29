@@ -88,6 +88,7 @@ export interface CliArgs {
   rawOutput: boolean | undefined;
   acceptRawOutputRisk: boolean | undefined;
   isCommand: boolean | undefined;
+  debugOpenai: boolean | undefined;
 }
 
 export async function parseArguments(
@@ -263,6 +264,12 @@ export async function parseArguments(
         .option('accept-raw-output-risk', {
           type: 'boolean',
           description: 'Suppress the security warning when using --raw-output.',
+        })
+        .option('debug-openai', {
+          type: 'boolean',
+          description:
+            'Enable debug logging for OpenAI-compatible API calls (writes to debug_openai.log).',
+          default: false,
         }),
     )
     // Register MCP subcommands
@@ -788,6 +795,7 @@ export async function loadCliConfig(
     disableLLMCorrection: settings.tools?.disableLLMCorrection,
     rawOutput: argv.rawOutput,
     acceptRawOutputRisk: argv.acceptRawOutputRisk,
+    debugOpenai: argv.debugOpenai || !!process.env['DEBUG_OPENAI'],
     modelConfigServiceConfig: settings.modelConfigs,
     // TODO: loading of hooks based on workspace trust
     enableHooks:

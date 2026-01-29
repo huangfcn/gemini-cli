@@ -82,7 +82,7 @@ export async function createContentGeneratorConfig(
   const googleCloudLocation = process.env['GOOGLE_CLOUD_LOCATION'] || undefined;
 
   // OpenAI-compatible API environment variables
-  const openaiApiKey = process.env['OPENAI_API_KEY'] || "XXXXXXXX";
+  const openaiApiKey = process.env['OPENAI_API_KEY'] || 'XXXXXXXX';
   const openaiEndpoint =
     process.env['OPENAI_API_ENDPOINT'] ||
     'http://localhost:11434/v1/chat/completions';
@@ -209,16 +209,12 @@ export async function createContentGenerator(
     // OpenAI-compatible API
     if (config.authType === AuthType.USE_OPENAI_COMPATIBLE) {
       const openaiGenerator = new OpenAICompatibleContentGenerator({
-        endpoint: config.openaiEndpoint || 'https://api.openai.com/v1/chat/completions',
+        endpoint:
+          config.openaiEndpoint || 'https://api.openai.com/v1/chat/completions',
         model: config.openaiModel || 'gpt-4',
         apiKey: config.apiKey,
+        debugOpenai: gcConfig.getDebugOpenai(),
       });
-      // Log OpenAI configuration details as requested
-      const maskedKey = config.apiKey ? `${config.apiKey.slice(0, 8)}...` : 'undefined';
-      console.error(`OpenAI Configuration:
-  Endpoint: ${config.openaiEndpoint || 'https://api.openai.com/v1/chat/completions'}
-  Model: ${config.openaiModel || 'gpt-4'}
-  API Key: ${maskedKey}`);
       return new LoggingContentGenerator(openaiGenerator, gcConfig);
     }
 

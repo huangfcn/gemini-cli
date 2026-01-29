@@ -466,6 +466,7 @@ export interface ConfigParameters {
     adminSkillsEnabled?: boolean;
     agents?: AgentSettings;
   }>;
+  debugOpenai?: boolean;
 }
 
 export class Config {
@@ -588,6 +589,7 @@ export class Config {
   private readonly disableYoloMode: boolean;
   private readonly rawOutput: boolean;
   private readonly acceptRawOutputRisk: boolean;
+  private readonly debugOpenai: boolean;
   private pendingIncludeDirectories: string[];
   private readonly enableHooks: boolean;
   private readonly enableHooksUI: boolean;
@@ -784,6 +786,7 @@ export class Config {
     this.disableYoloMode = params.disableYoloMode ?? false;
     this.rawOutput = params.rawOutput ?? false;
     this.acceptRawOutputRisk = params.acceptRawOutputRisk ?? false;
+    this.debugOpenai = params.debugOpenai ?? false;
 
     if (params.hooks) {
       this.hooks = params.hooks;
@@ -1503,6 +1506,10 @@ export class Config {
 
   getAcceptRawOutputRisk(): boolean {
     return this.acceptRawOutputRisk;
+  }
+
+  getDebugOpenai(): boolean {
+    return this.debugOpenai;
   }
 
   getPendingIncludeDirectories(): string[] {
