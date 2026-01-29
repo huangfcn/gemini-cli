@@ -28,7 +28,10 @@ export function validateAuthMethodWithSettings(
     return null;
   }
   // If using Gemini API key, we don't validate it here as we might need to prompt for it.
-  if (authType === AuthType.USE_GEMINI) {
+  if (
+    authType === AuthType.USE_GEMINI ||
+    authType === AuthType.USE_OPENAI_COMPATIBLE
+  ) {
     return null;
   }
   return validateAuthMethod(authType);

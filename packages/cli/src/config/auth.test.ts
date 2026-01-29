@@ -84,6 +84,22 @@ describe('validateAuthMethod', () => {
         'Update your environment and try again (no reload needed if using .env)!',
     },
     {
+      description:
+        'should return null for USE_OPENAI_COMPATIBLE if OPENAI_API_KEY is set',
+      authType: AuthType.USE_OPENAI_COMPATIBLE,
+      envs: { OPENAI_API_KEY: 'test-key' },
+      expected: null,
+    },
+    {
+      description:
+        'should return an error message for USE_OPENAI_COMPATIBLE if OPENAI_API_KEY is not set',
+      authType: AuthType.USE_OPENAI_COMPATIBLE,
+      envs: {},
+      expected:
+        'When using OpenAI Compatible API, you must specify the OPENAI_API_KEY environment variable.\n' +
+        'Update your environment and try again (no reload needed if using .env)!',
+    },
+    {
       description: 'should return an error message for an invalid auth method',
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       authType: 'invalid-method' as any,
