@@ -24,6 +24,8 @@ Learn all about Gemini CLI in our [documentation](https://geminicli.com/docs/).
   commands, web fetching.
 - **🔌 Extensible**: MCP (Model Context Protocol) support for custom
   integrations.
+- **🔄 OpenAI Compatible**: Support models with OpenAI compatible API (e.g.
+  Ollama, OpenAI).
 - **💻 Terminal-first**: Designed for developers who live in the command line.
 - **🛡️ Open source**: Apache 2.0 licensed.
 
@@ -36,40 +38,11 @@ Learn all about Gemini CLI in our [documentation](https://geminicli.com/docs/).
 
 ### Quick Install
 
-#### Run instantly with npx
-
 ```bash
-# Using npx (no installation required)
-npx @google/gemini-cli
-```
-
-#### Install globally with npm
-
-```bash
-npm install -g @google/gemini-cli
-```
-
-#### Install globally with Homebrew (macOS/Linux)
-
-```bash
-brew install gemini-cli
-```
-
-#### Install globally with MacPorts (macOS)
-
-```bash
-sudo port install gemini-cli
-```
-
-#### Install with Anaconda (for restricted environments)
-
-```bash
-# Create and activate a new environment
-conda create -y -n gemini_env -c conda-forge nodejs
-conda activate gemini_env
-
-# Install Gemini CLI globally via npm (inside the environment)
-npm install -g @google/gemini-cli
+git clone https://github.com/google-gemini/gemini-cli
+cd gemini-cli
+npm run build
+npm install -g .
 ```
 
 ## Release Cadence and Tags
@@ -211,9 +184,11 @@ gemini
 
 ### Option 4: OpenAI Compatible
 
-**✨ Best for:** Developers using Ollama, LocalAI, or other OpenAI-compatible providers
+**✨ Best for:** Developers using Ollama, LocalAI, or other OpenAI-compatible
+providers
 
 **Benefits:**
+
 - **Flexibility**: Use local models or alternative cloud providers
 - **Compatibility**: Standard OpenAI API format
 - **Control**: Full control over endpoint and model
