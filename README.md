@@ -29,7 +29,7 @@ Learn all about Gemini CLI in our [documentation](https://geminicli.com/docs/).
 - **💻 Terminal-first**: Designed for developers who live in the command line.
 - **🛡️ Open source**: Apache 2.0 licensed.
 
-## 📦 Installation
+## 📦 Installation (With OpenAI Compatible Support)
 
 ### Pre-requisites before installation
 
@@ -39,7 +39,7 @@ Learn all about Gemini CLI in our [documentation](https://geminicli.com/docs/).
 ### Quick Install
 
 ```bash
-git clone https://github.com/google-gemini/gemini-cli
+git clone https://github.com/huangfcn/gemini-cli.git
 cd gemini-cli
 npm run build
 npm install -g .
